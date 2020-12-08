@@ -1,10 +1,8 @@
 f = 'day-08/input.txt'
 
-data = list()
 with open(f, 'r') as fp:
-    for line in fp.read().split("\n"):
-        x, y = line.split(" ")
-        data.append((x, int(y)))
+    lines = [line.split() for line in fp.read().split("\n")]
+    data = list(map(lambda x: (x[0], int(x[1])), lines))
 n = len(data)
 
 
@@ -20,13 +18,8 @@ def run(instructions):
             op_, val_ = instructions[i]
         except IndexError:
             return i, acc
-        if op_ == 'nop':
-            i += 1
-        elif op_ == 'jmp':
-            i += val_
-        elif op_ == 'acc':
-            acc += val_
-            i += 1
+        i += 1 if op_ != 'jmp' else val_
+        acc += val_ if op_ == 'acc' else 0
 
 
 # Problem 1
