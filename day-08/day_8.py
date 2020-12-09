@@ -38,5 +38,5 @@ for op_idx in ops_to_check:
     new_data[op_idx] = new_op
     idx, ans = run(new_data)
     if idx == n:
-        print('problem 1:', ans)
+        print('problem 2:', ans)
         break
