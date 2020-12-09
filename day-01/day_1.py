@@ -2,25 +2,28 @@
 https://adventofcode.com/2020/day/1
 """
 
-from itertools import product
-
 f = 'day-01/input.txt'
 
 with open(f, 'r') as fp:
-    data = fp.read().split('\n')
-
-d = [int(x) for x in data]
-s = set(d)
+    data = [int(x) for x in fp.read().split('\n')]
 
 # Problem 1
-for n in s:
-    if (2020-n) in s:
-        print(n * (2020-n))
+s1 = set(data)
+for n in data:
+    test = 2020-n
+    if test in s1:
+        result1 = n*test
         break
 
 # Problem 2
-combs = product(d, d, d)
-for c in combs:
-    if sum(c) == 2020:
-        print(c[0]*c[1]*c[2])
-        break
+s2 = sorted(data)
+for i, n1 in enumerate(s2):
+    for n2 in s2[i+1:]:
+        if (n1+n2) > 2020:
+            break
+        if 2020-n1-n2 in s1:
+            result2 = n1 * n2 * (2020-n1-n2)
+            break
+
+print('problem 1:', result1)
+print('problem 2:', result2)
