@@ -1,3 +1,7 @@
+"""
+https://adventofcode.com/2020/day/6
+"""
+
 f = 'day-06/input.txt'
 
 with open(f, 'r') as fp:

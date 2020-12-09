@@ -1,3 +1,7 @@
+"""
+https://adventofcode.com/2020/day/3
+"""
+
 from functools import reduce
 
 f = 'day-03/input.txt'

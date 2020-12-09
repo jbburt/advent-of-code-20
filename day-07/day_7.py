@@ -1,3 +1,7 @@
+"""
+https://adventofcode.com/2020/day/7
+"""
+
 from collections import defaultdict
 
 f = 'day-07/input.txt'
