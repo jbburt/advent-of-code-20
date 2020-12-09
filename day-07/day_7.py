@@ -31,7 +31,7 @@ while queue:
             if c in colors and k in untested:
                 queue.add(k)
                 untested.remove(k)
-print(n)
+print(f'problem 1: {n}')
 
 # Problem 2
 n = -1
@@ -44,4 +44,5 @@ while queue:
     if nested_items is not None:
         for c, nb in nested_items:
             queue[c] += nb*nbags
-print(n)
+print(f'problem 2: {n}')
+

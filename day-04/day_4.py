@@ -17,19 +17,6 @@ for e in entries:
     passports.append(entry_dict)
 
 keys = {'byr', 'iyr', 'eyr', 'hgt', 'hcl', 'ecl', 'pid'}
-
-# Problem 1
-
-np = 0
-valid_passports1 = list()
-for p in passports:
-    if set(p.keys()).issuperset(keys):
-        np += 1
-        valid_passports1.append(p)
-print(np)
-
-# Problem 2
-
 eyecolors = {'amb', 'blu', 'brn', 'gry', 'grn', 'hzl', 'oth'}
 
 
@@ -67,10 +54,20 @@ def isvalid(pdict):
     return 1
 
 
+# Problem 1
+np = 0
+valid_passports1 = list()
+for p in passports:
+    if set(p.keys()).issuperset(keys):
+        np += 1
+        valid_passports1.append(p)
+print('problem 1:', np)
+
+# Problem 2
 np = 0
 valid_passports2 = list()
 for p in valid_passports1:
     if isvalid(p):
         np += 1
         valid_passports2.append(p)
-print(np)
+print('problem 2:', np)

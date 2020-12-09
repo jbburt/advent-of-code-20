@@ -27,7 +27,7 @@ def run(instructions):
 
 
 # Problem 1
-print(run(data)[1])
+print('problem 1:', run(data)[1])
 
 # Problem 2
 ops_to_check = [j for j, (x, _) in enumerate(data) if x in ['nop', 'jmp']]
@@ -38,5 +38,5 @@ for op_idx in ops_to_check:
     new_data[op_idx] = new_op
     idx, ans = run(new_data)
     if idx == n:
-        print(ans)
+        print('problem 1:', ans)
         break

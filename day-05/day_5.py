@@ -19,8 +19,9 @@ def pass2id(bp):
 
 # Problem 1
 seat_ids = [pass2id(bp) for bp in passes]
-print(max(seat_ids))
+max_id = max(seat_ids)
+print('problem 1:', max_id)
 
 # Problem 2
-all_ids = set(range(min(seat_ids), max(seat_ids)+1))
-print(all_ids.difference(seat_ids))
+all_ids = set(range(min(seat_ids), max_id+1))
+print('problem 2:', all_ids.difference(seat_ids))
