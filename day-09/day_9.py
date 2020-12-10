@@ -2,9 +2,6 @@
 https://adventofcode.com/2020/day/9
 """
 
-from time import time
-
-t1 = time()
 
 f = 'day-09/input.txt'
 
