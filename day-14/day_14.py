@@ -74,7 +74,6 @@ for l in lines[1:]:
     if l[:3] == 'mem':
         address, value = parse_mem(l)
         d1[address] = apply_mask(mask, value)  # problem 1
-
         masked_address = apply_mask_v2(mask, address)
         addresses = [binrep2num(x) for x in expand(masked_address)]
         for addy in addresses:
