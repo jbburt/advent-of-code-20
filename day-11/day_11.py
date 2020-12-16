@@ -5,8 +5,8 @@ https://adventofcode.com/2020/day/11
 import numpy as np
 from scipy.signal import convolve2d
 
+# Read data
 f = 'day-11/input.txt'
-
 with open(f) as fp:
     data = [[x for x in line] for line in fp.read().split('\n')]
 
@@ -22,6 +22,11 @@ class Grid(object):
         self.temp = None
 
     def compute_adjacent(self):
+        """
+        Compute indices of grid cells adjacent to each cell. This method
+        updates `self.adjacent`.
+
+        """
         for i in range(self.nr):
             for j in range(self.nc):
                 inds = list()
@@ -32,25 +37,58 @@ class Grid(object):
                                 inds.append((i+di, j+dj))
                 self.adjacent[(i, j)] = inds
 
-    def update(self, i, j, max_n_adj):
+    def _update(self, i, j, max_n_adj):
+        """
+        State-updating method for problems 1 and 2.
+
+        Parameters
+        ----------
+        i : int
+            row index
+        j : int
+            col index
+        max_n_adj : int
+            max number of adjacent seats allowed
+
+        Returns
+        -------
+        int : row index
+        int : col index
+        char : updated seat
+
+        """
         empty = self.temp[i][j] == 'L'
-        occupied = self.temp[i][j] == '#'
+        is_occupied = self.temp[i][j] == '#'
         adjacent = [self.temp[ii][jj] for (ii, jj) in self.adjacent[(i, j)]]
         n_adjacent_filled = sum([x == '#' for x in adjacent])
         if empty and not n_adjacent_filled:
             return i, j, '#'
-        elif occupied and n_adjacent_filled >= max_n_adj:
+        elif is_occupied and n_adjacent_filled >= max_n_adj:
             return i, j, 'L'
         return None
 
-    def problem1(self):
+    def solve_steady_state(self, problem=1):
+        """
+        Find steady-state solution to one of the problems.
+
+        Parameters
+        ----------
+        problem : int
+            1 or 2
+
+        """
         self.temp = [[i for i in l] for l in self.grid]
-        self.compute_adjacent()
+        if problem == 1:
+            self.compute_adjacent()
+            max_adj = 4
+        else:
+            self.compute_lineofsight()
+            max_adj = 5
         while True:
             updates = list()
             for r in range(self.nr):
                 for c in range(self.nc):
-                    u = self.update(r, c, 4)
+                    u = self._update(r, c, max_adj)
                     if u is not None:
                         updates.append(u)
             if not updates:
@@ -58,9 +96,15 @@ class Grid(object):
             for r, c, v in updates:
                 self.temp[r][c] = v
         answer = sum(map(lambda x: sum([s == '#' for s in x]), self.temp))
-        print(f'problem 1: {answer}')
+        print(f'problem {problem}: {answer}')
 
     def compute_lineofsight(self):
+        """
+        Compute index of nearest seat along line-of-sight in each of eight
+        directions (four cardinal plus four diagonal). This method updates
+        `self.adjacent`.
+
+        """
         for i in range(self.nr):
             for j in range(self.nc):
                 seats = list()
@@ -77,27 +121,10 @@ class Grid(object):
                                     k += 1
                 self.adjacent[(i, j)] = seats
 
-    def problem2(self):
-        self.temp = [[i for i in l] for l in self.grid]
-        self.compute_lineofsight()
-        while True:
-            updates = list()
-            for r in range(self.nr):
-                for c in range(self.nc):
-                    u = self.update(r, c, 5)
-                    if u is not None:
-                        updates.append(u)
-            if not updates:
-                break
-            for r, c, v in updates:
-                self.temp[r][c] = v
-        answer = sum(map(lambda x: sum([s == '#' for s in x]), self.temp))
-        print(f'problem 2: {answer}')
-
 
 g = Grid(data)
-g.problem1()
-g.problem2()
+g.solve_steady_state(1)
+g.solve_steady_state(2)
 
 # ----------------------------------------------------- #
 # Problem 1 w/ image convolution (significantly faster) #

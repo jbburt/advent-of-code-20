@@ -4,13 +4,25 @@ https://adventofcode.com/2020/day/15
 
 from collections import defaultdict
 
+# Read input
 f = 'day-15/input.txt'
-
 with open(f) as fp:
     nums = [int(x) for x in fp.read().strip().split(",")]
 
 
-def main(n):
+def play(n):
+    """
+    Play the game described in the problem.
+
+    Parameters
+    ----------
+    n : number of times a number is spoken
+
+    Returns
+    -------
+    int : the `n`-th number spoken, per the rules of the game
+
+    """
     d = defaultdict(list)
     for j, x in enumerate(nums):
         d[x].append(j)
@@ -26,8 +38,11 @@ def main(n):
     return x
 
 
-print(f'problem 1: {main(2020)}')
-print(f'problem 2: {main(30000000)}')
+# Problem 1: what will be the 2020th number spoken?
+print(f'problem 1: {play(2020)}')
+
+# Problem 2: what will be the 30000000th number spoken?
+print(f'problem 2: {play(30000000)}')
 
 
 # Solution 2, marginally faster but less concise

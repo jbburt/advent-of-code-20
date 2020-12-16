@@ -4,15 +4,16 @@ https://adventofcode.com/2020/day/12
 
 from math import sin, cos, pi
 
+# Read input
 f = 'day-12/input.txt'
-
 with open(f) as fp:
     instructions = [(x[0], int(x[1:])) for x in fp.read().split('\n')]
 
 
+# Problem 1: What is the Manhattan distance between the final location and the
+# ship's starting position?
 heading = [1, 0]  # +x direction = east
 pos = [0, 0]
-
 for ins, val in instructions:
     if ins == 'N':
         pos[1] += val
@@ -33,14 +34,12 @@ for ins, val in instructions:
         x = heading[0] * cosine - heading[1] * sine
         y = heading[0] * sine + heading[1] * cosine
         heading = (x, y)
-
 print(f'problem 1: {int(abs(pos[0])+abs(pos[1])+0.5)}')
 
-# problem 2
-
+# Problem 2: What is the Manhattan distance between the final location and the
+# ship's starting position?
 waypoint = [10, 1]  # relative to the ship
 pos = [0, 0]
-
 for ins, val in instructions:
     if ins == 'N':
         waypoint[1] += val
@@ -61,5 +60,4 @@ for ins, val in instructions:
         x = waypoint[0] * cosine - waypoint[1] * sine
         y = waypoint[0] * sine + waypoint[1] * cosine
         waypoint = [x, y]
-
 print(f'problem 2: {int(abs(pos[0])+abs(pos[1])+0.5)}')
