@@ -2,12 +2,13 @@
 https://adventofcode.com/2020/day/1
 """
 
+# Read input
 f = 'day-01/input.txt'
-
 with open(f, 'r') as fp:
     data = [int(x) for x in fp.read().split('\n')]
 
-# Problem 1
+# Problem 1:
+# What is the product of the two elements that sum to 2020?
 s1 = set(data)
 for n in data:
     test = 2020-n
@@ -15,7 +16,8 @@ for n in data:
         result1 = n*test
         break
 
-# Problem 2
+# Problem 2:
+# What is the product of the three elements that sum to 2020?
 s2 = sorted(data)
 for i, n1 in enumerate(s2):
     for n2 in s2[i+1:]:

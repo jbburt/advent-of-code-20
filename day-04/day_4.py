@@ -2,8 +2,8 @@
 https://adventofcode.com/2020/day/4
 """
 
+# Read and parse input
 f = 'day-04/input.txt'
-
 with open(f, 'r') as fp:
     text = fp.read()
 passports = list()
@@ -16,11 +16,25 @@ for e in entries:
         entry_dict[k] = v
     passports.append(entry_dict)
 
-keys = {'byr', 'iyr', 'eyr', 'hgt', 'hcl', 'ecl', 'pid'}
+fields = {'byr', 'iyr', 'eyr', 'hgt', 'hcl', 'ecl', 'pid'}
 eyecolors = {'amb', 'blu', 'brn', 'gry', 'grn', 'hzl', 'oth'}
 
 
-def isvalid(pdict):
+def pass_is_valid(pdict):
+    """
+    Check if a passport is valid.
+
+    Parameters
+    ----------
+    pdict : dict
+        dictionary containing passport elements
+
+    Returns
+    -------
+    int
+        1 if passport is valid, else 0
+
+    """
     for key, value in pdict.items():
         if key == 'byr':
             if int(value) < 1920 or int(value) > 2002:
@@ -58,7 +72,7 @@ def isvalid(pdict):
 np = 0
 valid_passports1 = list()
 for p in passports:
-    if set(p.keys()).issuperset(keys):
+    if set(p.keys()).issuperset(fields):  # passport incl. all required fields
         np += 1
         valid_passports1.append(p)
 print('problem 1:', np)
@@ -67,7 +81,7 @@ print('problem 1:', np)
 np = 0
 valid_passports2 = list()
 for p in valid_passports1:
-    if isvalid(p):
+    if pass_is_valid(p):
         np += 1
         valid_passports2.append(p)
 print('problem 2:', np)
