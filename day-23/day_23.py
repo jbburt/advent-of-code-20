@@ -148,7 +148,7 @@ nodes[cups[-1]-1].next = nodes[9]
 for i in range(10, 1000000):
     nodes[i-1].next = nodes[i]
 head = nodes[cups[0]-1]
-nodes[-1].next = head
+nodes[n-1].next = head
 
 for move in range(10000000):
 
@@ -185,5 +185,48 @@ for move in range(10000000):
     # select new current cup
     head = head.next
 
-# print(nodes[0].next.value, nodes[0].next.next.value)
 print(f'problem 2: {nodes[0].next.value * nodes[0].next.next.value}')
+
+
+# ~25% faster solution to prob. 2 using a dictionary instead of a list of nodes
+nodes = {i: i+1 for i in range(1000001)}
+n = 1000000
+for c1, c2 in zip(cups[:-1], cups[1:]):
+    nodes[c1] = c2
+nodes[cups[-1]] = 10
+head = cups[0]
+nodes[n] = head
+
+for _ in range(10000000):
+
+    # select next three cups
+    c1 = nodes[head]
+
+    next_three_values = {c1}
+    node = c1
+    for _ in range(2):
+        node = nodes[node]
+        next_three_values.add(node)
+    c3 = node
+
+    # determine destination value
+    dest = head-1 if head > 1 else n
+    while dest in next_three_values:
+        dest -= 1
+        if not dest:
+            dest = n
+
+    # head now points to the fourth-next cup
+    nodes[head] = nodes[c3]
+
+    # destination cup now points to the three picked-up cups
+    temp = nodes[dest]
+    nodes[dest] = c1
+
+    # third picked-up cup now points to the cup destination cup pointed to
+    nodes[c3] = temp
+
+    # select new current cup
+    head = nodes[head]
+
+print(f'problem 2: {nodes[1] * nodes[nodes[1]]}')
